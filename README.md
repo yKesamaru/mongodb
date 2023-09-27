@@ -1,7 +1,7 @@
 
 # プロジェクト専用のMongoDB環境をUbuntu 20.04で構築する
 
-![](assets/66bb290d191781dbfd896d635596763dbe3bebba.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/66bb290d191781dbfd896d635596763dbe3bebba.png)
 
 ## 背景
 - 顔認識システムで、URL、512次元の数値配列、検索結果などを効率よく保存・検索したい。
@@ -24,11 +24,11 @@ sudo systemctl status docker
 [Install Docker Desktop on Ubuntu](https://docs.docker.com/desktop/install/ubuntu/)
 
 ### 2. MongoDBのDockerコンテナを起動
-専用のディレクトリ（例：`/home/terms/bin/mongodb`）でMongoDBのDockerコンテナを起動する。
+専用のディレクトリ（例：`/home/user/bin/mongodb`）でMongoDBのDockerコンテナを起動する。
 ```bash
-docker run --name my-mongodb -v /home/terms/bin/mongodb/data:/data/db -p 27017:27017 -d mongo
+docker run --name my-mongodb -v /home/user/bin/mongodb/data:/data/db -p 27017:27017 -d mongo
 ```
-![](assets/2023-09-27-17-36-39.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/2023-09-27-17-36-39.png)
 
 ### 3. Python仮想環境の作成
 同じディレクトリ内でPythonの仮想環境を作成する。
