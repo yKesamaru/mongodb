@@ -57,43 +57,12 @@ pip install faiss-cpu  # CPU版
 ```
 
 ### コード例
-以下のPythonコードは、MongoDBにダミーデータを挿入し、Faissで検索を行い、その結果をMongoDBに保存する一連の流れを示しています。
+1. MongoDBに接続し、ダミーデータを挿入。
+2. Faissのインデックスを作成し、ダミーデータを追加。
+3. テキストファイル（ここではランダムに生成）からクエリベクトルを読み込み、Faissで検索。
+4. 検索結果に一致したURLを標準出力。
 
-```python
-from pymongo import MongoClient
-import numpy as np
-import faiss
 
-# MongoDBに接続
-client = MongoClient('localhost', 27017)
-db = client['my_database']
-collection = db['my_collection']
-
-# ダミーデータを作成（512次元のベクトル、10個）
-dummy_data = np.random.rand(10, 512).astype('float32')
-
-# MongoDBにダミーデータを挿入
-for i, vec in enumerate(dummy_data):
-    collection.insert_one({'index': i, 'vector': vec.tolist()})
-
-# Faissのインデックスを作成
-index = faiss.IndexFlatL2(512)
-index.add(dummy_data)
-
-# 検索用のクエリベクトルを作成（512次元）
-query_vector = np.random.rand(1, 512).astype('float32')
-
-# Faissで検索
-k = 3  # 近傍点数
-D, I = index.search(query_vector, k)
-
-# 検索結果をMongoDBに保存
-for i in I[0]:
-    doc = collection.find_one({'index': int(i)})
-    collection.update_one({'index': int(i)}, {'$set': {'is_similar': True}})
-
-print("Faissでの検索とMongoDBへの結果保存が完了しました。")
-```
 
 ---
 
@@ -101,7 +70,3 @@ print("Faissでの検索とMongoDBへの結果保存が完了しました。")
 - Dockerを使用することで、システム全体に影響を与えずにMongoDBを導入できる。
 - Pythonの仮想環境内でMongoDBのPythonドライバー（PyMongo）をインストールすることで、プロジェクト専用の環境を構築できる。
 - FaissとMongoDBを組み合わせることで、高次元のベクトルデータに対する効率的な検索と保存が可能。
-
----
-
-この内容で技術ブログに書く際の参考になれば幸いです。何か他に質問や追加したい点があれば、どうぞお知らせください。
