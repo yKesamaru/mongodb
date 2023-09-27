@@ -1,6 +1,6 @@
-from pymongo import MongoClient
-import numpy as np
 import faiss
+import numpy as np
+from pymongo import MongoClient
 
 # MongoDBに接続
 client = MongoClient('localhost', 27017)
