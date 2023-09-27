@@ -1,7 +1,7 @@
 
 # プロジェクト専用のMongoDB環境をUbuntu 20.04で構築する
 
-![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/66bb290d191781dbfd896d635596763dbe3bebba.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch.png)
 
 ## 背景
 - 顔認識システムで、URL、512次元の数値配列、検索結果などを効率よく保存・検索したい。
@@ -62,7 +62,13 @@ pip install faiss-cpu  # CPU版
 3. テキストファイル（ここではランダムに生成）からクエリベクトルを読み込み、Faissで検索。
 4. 検索結果に一致したURLを標準出力。
 
+https://github.com/yKesamaru/mongodb/blob/a0f6e3f40cff33fb6fb0febf1445aa2ab6b8889f/faiss_mongodb_example.py#L1-L38
 
+#### 出力例
+```bash
+検索に一致したURL: amazon.co.jp
+Faissでの検索と結果の出力が完了しました。
+```
 
 ---
 
