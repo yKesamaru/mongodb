@@ -1,25 +1,22 @@
-
-# プロジェクト専用のMongoDB環境をUbuntu 20.04で構築する
-
 ![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch.png)
 
-- [プロジェクト専用のMongoDB環境をUbuntu 20.04で構築する](#プロジェクト専用のmongodb環境をubuntu-2004で構築する)
-  - [背景](#背景)
-  - [解決策](#解決策)
-  - [手順](#手順)
-    - [1. Dockerのインストール](#1-dockerのインストール)
-      - [Dockerがインストールされているか確認](#dockerがインストールされているか確認)
-    - [2. MongoDBのDockerコンテナーを起動](#2-mongodbのdockerコンテナーを起動)
-    - [3. Python仮想環境の作成](#3-python仮想環境の作成)
-    - [4. 仮想環境をアクティブにする](#4-仮想環境をアクティブにする)
-    - [5. MongoDBのPythonドライバーをインストール](#5-mongodbのpythonドライバーをインストール)
-  - [FaissとMongoDBを組み合わせたダミーデータの検索](#faissとmongodbを組み合わせたダミーデータの検索)
-    - [必要なパッケージのインストール](#必要なパッケージのインストール)
-    - [コード例](#コード例)
-      - [出力例](#出力例)
-  - [起動しているMongoDBコンテナーを停止する](#起動しているmongodbコンテナーを停止する)
-    - [例](#例)
-  - [まとめ](#まとめ)
+- [背景](#背景)
+- [解決策](#解決策)
+- [手順](#手順)
+  - [1. Dockerのインストール](#1-dockerのインストール)
+    - [Dockerがインストールされているか確認](#dockerがインストールされているか確認)
+  - [2. MongoDBのDockerコンテナを起動](#2-mongodbのdockerコンテナを起動)
+    - [一度停止したコンテナを再起動するには](#一度停止したコンテナを再起動するには)
+  - [3. Python仮想環境の作成](#3-python仮想環境の作成)
+  - [4. 仮想環境をアクティブにする](#4-仮想環境をアクティブにする)
+  - [5. MongoDBのPythonドライバーをインストール](#5-mongodbのpythonドライバーをインストール)
+- [FaissとMongoDBを組み合わせたダミーデータの検索](#faissとmongodbを組み合わせたダミーデータの検索)
+  - [必要なパッケージのインストール](#必要なパッケージのインストール)
+  - [コード例](#コード例)
+    - [出力例](#出力例)
+- [起動しているMongoDBコンテナを停止する](#起動しているmongodbコンテナを停止する)
+  - [例](#例)
+- [まとめ](#まとめ)
 
 
 ## 背景
@@ -43,13 +40,33 @@ sudo systemctl status docker
 
 [Install Docker Desktop on Ubuntu](https://docs.docker.com/desktop/install/ubuntu/)
 
-### 2. MongoDBのDockerコンテナーを起動
-専用のディレクトリ（例：`/home/user/bin/mongodb`）でMongoDBのDockerコンテナーを起動する。
+### 2. MongoDBのDockerコンテナを起動
+専用のディレクトリ（例：`/home/user/bin/mongodb`）でMongoDBのDockerコンテナを起動する。
 ```bash
 docker run --name my-mongodb -v /home/user/bin/mongodb/data:/data/db -p 27017:27017 -d mongo
 ```
 
 ![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/2023-09-27-17-36-39.png)
+
+#### 一度停止したコンテナを再起動するには
+Dockerコンテナを一度停止した後、再び起動するには以下の手順を実行します。
+
+1. **停止したコンテナのIDまたは名前を確認する**: `docker ps -a` コマンドを使用して、すべてのコンテナ（実行中、停止中を含む）の一覧を表示します。
+    ```bash
+    docker ps -a
+    ```
+    このコマンドの出力から、再起動したいMongoDBコンテナのIDまたは名前（この場合は`my-mongodb`）を確認できます。
+
+2. **コンテナを再起動する**: `docker start` コマンドに、再起動したいコンテナのIDまたは名前を指定します。
+    ```bash
+    docker start [CONTAINER_ID_OR_NAME]
+    ```
+    例えば、コンテナの名前が `my-mongodb` の場合、以下のように実行します。
+    ```bash
+    docker start my-mongodb
+    ```
+
+これで、`my-mongodb` コンテナが再起動します。
 
 ### 3. Python仮想環境の作成
 同じディレクトリ内でPythonの仮想環境を作成する。
@@ -90,19 +107,19 @@ https://github.com/yKesamaru/mongodb/blob/a0f6e3f40cff33fb6fb0febf1445aa2ab6b888
 Faissでの検索と結果の出力が完了しました。
 ```
 
-## 起動しているMongoDBコンテナーを停止する
+## 起動しているMongoDBコンテナを停止する
 
-1. **コンテナーのIDまたは名前を確認する**: `docker ps` コマンドを使用して、現在実行中のコンテナーの一覧を表示します。
+1. **コンテナのIDまたは名前を確認する**: `docker ps` コマンドを使用して、現在実行中のコンテナの一覧を表示します。
     ```bash
     docker ps
     ```
-    このコマンドの出力から、MongoDBコンテナーのIDまたは名前を確認できます。
+    このコマンドの出力から、MongoDBコンテナのIDまたは名前を確認できます。
 
-2. **コンテナーを停止する**: `docker stop` コマンドに、停止したいコンテナーのIDまたは名前を指定します。
+2. **コンテナを停止する**: `docker stop` コマンドに、停止したいコンテナのIDまたは名前を指定します。
     ```bash
     docker stop [CONTAINER_ID_OR_NAME]
     ```
-    例えば、コンテナーのIDが `1234567890ab` の場合、以下のように実行します。
+    例えば、コンテナのIDが `1234567890ab` の場合、以下のように実行します。
     ```bash
     docker stop 1234567890ab
     ```
@@ -121,7 +138,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ```
 
-これで、MongoDBのDockerコンテナーが停止します。
+これで、MongoDBのDockerコンテナが停止します。
 
 ---
 
