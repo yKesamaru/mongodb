@@ -14,7 +14,7 @@
   - [必要なパッケージのインストール](#必要なパッケージのインストール)
   - [コード例](#コード例)
     - [出力例](#出力例)
-- [保存されたデータをホストのディレクトリにエクスポートする](#保存されたデータをホストのディレクトリにエクスポートする)
+  - [保存されたデータをホストのディレクトリにエクスポートするには](#保存されたデータをホストのディレクトリにエクスポートするには)
 - [起動しているMongoDBコンテナを停止する](#起動しているmongodbコンテナを停止する)
   - [例](#例)
 - [まとめ](#まとめ)
@@ -108,7 +108,7 @@ https://github.com/yKesamaru/mongodb/blob/a0f6e3f40cff33fb6fb0febf1445aa2ab6b888
 Faissでの検索と結果の出力が完了しました。
 ```
 
-## 保存されたデータをホストのディレクトリにエクスポートする
+### 保存されたデータをホストのディレクトリにエクスポートするには
 ```bash
 # MongoDBのコンテナ内でデータをエクスポート
 docker exec -it my-mongodb mongoexport --db=my_database --collection=my_collection --out=/tmp/my_collection.json
@@ -117,6 +117,7 @@ docker exec -it my-mongodb mongoexport --db=my_database --collection=my_collecti
 docker cp my-mongodb:/tmp/my_collection.json ./my_collection.json
 
 ```
+
 ![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/2023-09-28-15-09-17.png)
 
 ```bash
