@@ -1,12 +1,34 @@
 # [Docker] MongoDBとFaissを使って類似画像を検索する
 
-![](assets/eye_catch_3.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch_3.png)
+
+- [\[Docker\] MongoDBとFaissを使って類似画像を検索する](#docker-mongodbとfaissを使って類似画像を検索する)
+  - [はじめに](#はじめに)
+    - [新しいコンテナを作成する](#新しいコンテナを作成する)
+    - [コンテナの確認](#コンテナの確認)
+      - [追加解説：ポートマッピング](#追加解説ポートマッピング)
+        - [0.0.0.0:27019-\>27017/tcp, :::27019-\>27017/tcpとは？](#000027019-27017tcp-27019-27017tcpとは)
+    - [MongoDBに接続するPythonコード](#mongodbに接続するpythonコード)
+      - [出力結果](#出力結果)
+  - [データベースを設計する](#データベースを設計する)
+    - [コレクションの設計](#コレクションの設計)
+    - [フィールドの設計](#フィールドの設計)
+    - [Pythonでコレクションを作成するテンプレート](#pythonでコレクションを作成するテンプレート)
+  - [MongoDBにデータを格納する](#mongodbにデータを格納する)
+  - [格納されたデータの確認](#格納されたデータの確認)
+    - [出力結果](#出力結果-1)
+  - [faissを使って検索する](#faissを使って検索する)
+    - [検索対象顔画像](#検索対象顔画像)
+    - [実装](#実装)
+    - [出力結果](#出力結果-2)
+  - [まとめ](#まとめ)
+
 
 ## はじめに
 プロジェクトごとにMongoDBを使い分けられる環境をDockerで作成してあります。
-この記事では、Dockerを使ってMongoDBを操作します。
+この記事では、Docker上に構築されたデータベースから、Faissを使って類似画像を検索していこうと思います。
 
-新しいコンテナを作成する
+### 新しいコンテナを作成する
 ```bash
 docker run --name new-mongodb-3 -p 27019:27017 -d mongo:latest
 ```
@@ -24,12 +46,10 @@ bc80d5f77ba2   mongo:latest   "docker-entrypoint.s…"   17 seconds ago   Up 16 
 
 ##### 0.0.0.0:27019->27017/tcp, :::27019->27017/tcpとは？
 
-この表記は、Dockerがどのようにポートマッピングをしているかを示しています。
-
 - `0.0.0.0:27019->27017/tcp`: IPv4アドレスでのアクセスを意味します。外部からはホストマシンの27019ポートにアクセスすると、コンテナ内の27017ポートに転送されます。
 - `:::27019->27017/tcp`: IPv6アドレスでのアクセスを意味します。基本的にはIPv4と同様の動作をします。
 
-#### MongoDBに接続するPythonコード
+### MongoDBに接続するPythonコード
 
 MongoDBに接続する際には、上記のポートマッピング設定に基づいてPythonコードを書きます。
 
@@ -50,7 +70,7 @@ for db_name in database_names:
 
 このコードでは、`MongoClient('localhost', 27019)`として、ホストマシンの27019ポートに接続しています。この27019ポートは、Dockerコンテナ内の27017ポートにマッピングされているため、実際にはコンテナ内のMongoDBに接続することになります。
 
-出力結果
+#### 出力結果
 ```bash
 Existing databases:
 admin
@@ -67,12 +87,9 @@ local
 新しいデータベースを作成する場合は、Pythonの`pymongo`ライブラリを使って簡単に作成できます。
 
 ## データベースを設計する
-
-MongoDBはスキーマレスなデータベースであり、柔軟なデータモデリングが可能です。しかし、それでもアプリケーションの要件に応じて、どのようなコレクションとフィールドを持つかは事前に考慮する必要があります。
-
 ### コレクションの設計
 
-今回のプロジェクトでは、`npKnown.npz`から取得したファイル名と512次元ベクトルデータを格納するコレクションを作成します。このコレクションを`known_vectors`と名付けましょう。
+今回のプロジェクトでは、`npKnown.npz`から取得したファイル名と512次元ベクトルデータを格納するコレクションを作成します。このコレクションを`known_vectors`と名付けます。
 
 ### フィールドの設計
 
@@ -111,12 +128,7 @@ for doc in collection.find({}):
 
 ## MongoDBにデータを格納する
 
-load_npKnown_npz.py
-
-```bash
-Number of documents in 'known_faces' collection: 59422
-```
-約6万件のデータがMongoDBに格納されました。
+https://github.com/yKesamaru/mongodb/blob/038389f84ab499ec8d3171ffe73d397f8a92a982/load_npKnown_npz.py#L1-L81
 
 ## 格納されたデータの確認
 ```python
@@ -153,16 +165,18 @@ Number of documents in 'known_faces' collection: 59422
 0.8671872615814209, 0.6558080911636353, -0.8653426766395569, 1.4265012741088867, 3.138498306274414, 0.05671160668134689, -0.868281364440918, -1.763211965560913, -1.2924718856811523, 0.6372048854827881, -1.6095494031906128, 0.24598270654678345, 0.018475055694580078, 0.3127145767211914]]}
 ```
 
+約6万件のデータがMongoDBに格納されました。
+
 ## faissを使って検索する
 ### 検索対象顔画像
 
-![](assets/woman.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/woman.png)
 
 生成AIで作成された顔画像を検索対象とします。
 
 ### 実装
 
-find_similarity_from_mongodb.py
+[load_npKnown_npz.py](https://github.com/yKesamaru/mongodb/blob/038389f84ab499ec8d3171ffe73d397f8a92a982/find_similarrity_from_mongodb.py#L1-L80)
 
 ### 出力結果
 ```bash
@@ -183,7 +197,7 @@ Similarity Score (Cosine Similarity): 0.38524919748306274
 Similar file name: 岸本加世子_QIp1.jpg_default.png.png_0.png_0_align_resize.png
 処理時間: 0分 6.07秒
 ```
-![](assets/image913.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/image913.png)
 
 ## まとめ
 わずか6秒で、約6万件のデータから類似画像を検索できました。
