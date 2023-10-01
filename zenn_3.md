@@ -1,6 +1,6 @@
 # [Docker] MongoDB接続がタイムアウトする場合の対処法
 
-![](assets/eye_catch_4.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch_4.png)
 
 - [\[Docker\] MongoDB接続がタイムアウトする場合の対処法](#docker-mongodb接続がタイムアウトする場合の対処法)
   - [はじめに](#はじめに)
@@ -18,6 +18,15 @@
 
 ## はじめに
 Dockerを使用してMongoDBコンテナを構築しました。構築から時間が経つと、接続がタイムアウトする問題に直面しました。
+具体的には
+```python
+client = MongoClient('mongodb://localhost:27019/')
+```
+のように、`localhost`文字列を使用した場合、接続ができませんでした。（当たり前のような気もしますし、自分でもあいまいです。）
+最終的には、以下のように、MongoDBコンテナのIPアドレスを使用することで、接続できるようになりました。
+```python
+client = MongoClient('mongodb://172.18.0.2:27017/')
+```
 この記事では、そのような状況での対処法を詳しく解説します。
 
 ## 注意
@@ -236,12 +245,15 @@ Pythonのインタラクティブシェルでは、以下のように接続を�
 ```
 
 ## まとめ
+この記事では、Dockerを使用して構築したMongoDBコンテナとの接続がタイムアウトする問題に対する対処法を詳細に解説しました。ufwの設定、`mongosh`の使用、MongoDBの設定確認、Dockerのネットワーク設定など、多角的な視点から問題を解決する方法を模索しました。
 
+また、`docker network inspect`コマンドを使用して、コンテナの内部IPアドレスを確認することで、Pythonからの接続もスムーズに行えました。
 
+Dockerのユーザー定義ネットワークを作成して、そのネットワークにMongoDBコンテナを接続する方法は、本来の運用（設定）方法とは違うかもしれません。その点はご留意下さい。
 
+何らかの接続問題に直面した際には、この記事が皆さんの参考になれば幸いです。
 
-
-
+以上です。ありがとうございました。
 
 ## 参考文献
 - [Docker コンテナ・ネットワークの理解](https://docs.docker.jp/engine/userguide/networking/dockernetworks.html)
