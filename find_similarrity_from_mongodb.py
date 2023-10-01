@@ -16,8 +16,8 @@ api = Dlib_api()
 start_time = time.time()
 
 # 顔写真をロード
-# face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman2.png")
-face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman.png")
+face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman2.png")
+# face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman.png")
 face_location = api.face_locations(face_image, mode="cnn")
 face_encoding = api.face_encodings(
     deep_learning_model=1,
@@ -78,6 +78,7 @@ end_time = time.time()
 elapsed_time = end_time - start_time
 minutes, seconds = divmod(elapsed_time, 60)
 print(f"処理時間: {int(minutes)}分 {seconds:.2f}秒")
+
 
 
 """

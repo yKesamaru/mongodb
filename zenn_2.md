@@ -30,8 +30,10 @@
 
 ### 新しいコンテナを作成する
 ```bash
-docker run --name new-mongodb-3 -p 27019:27017 -d mongo:latest
+docker run --name mongodb-1 --restart always -p 27019:27017 -d mongo:latest
 ```
+dockerが不安定なことがあるので、`--restart always`オプションをつけています。
+
 ### コンテナの確認
 ```bash
 docker ps
@@ -176,7 +178,7 @@ Number of documents in 'known_faces' collection: 59422
 
 ### 実装
 
-[load_npKnown_npz.py](https://github.com/yKesamaru/mongodb/blob/038389f84ab499ec8d3171ffe73d397f8a92a982/find_similarrity_from_mongodb.py#L1-L80)
+https://github.com/yKesamaru/mongodb/blob/038389f84ab499ec8d3171ffe73d397f8a92a982/find_similarrity_from_mongodb.py#L1-L80
 
 ### 出力結果
 ```bash

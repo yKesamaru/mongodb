@@ -23,6 +23,7 @@ import os
 import numpy as np
 from pymongo import MongoClient
 
+
 def save_npz_to_mongodb(npz_data, collection):
     """
     npzファイルから読み込んだデータをMongoDBに保存する。
@@ -68,7 +69,7 @@ def load_npz_from_directory(directory_path, collection):
 # MongoDBに接続
 client = MongoClient('localhost', 27019)
 
-# データベースを選択
+# データベースを選択（データベースが存在しなければ、後から自動生成される）
 db = client['face_recognition_db']
 
 # コレクションを選択
