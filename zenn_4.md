@@ -2,11 +2,21 @@
 
 ![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch_5.png)
 
+- [生成AIと肖像権](#生成aiと肖像権)
+  - [はじめに](#はじめに)
+  - [削除要請はだれがやるのか？](#削除要請はだれがやるのか)
+  - [生成AIの肖像権](#生成aiの肖像権)
+  - [どうすればいいのか？](#どうすればいいのか)
+  - [一般女性も被害にあう](#一般女性も被害にあう)
+  - [まとめ](#まとめ)
+
+
 ## はじめに
 まずこちらの画像をご覧ください。公開されている生成AI画像です。
 ![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/woman4.png)
 
 この画像は`find_similarity_from_mongodb.py`をもとに、名前を割り出しました。
+（というか、皆さんがご存知の女優さんを選びました。）
 
 https://zenn.dev/ykesamaru/articles/daf1ea9def85f4
 
@@ -40,6 +50,8 @@ Similar file name: 鈴木京香_TvdV.jpg.png.png_0.png_0_align_resize.png
 というより、技術ブログに載せられる程度の参考写真を持ってきました。ほとんどはここに載せることをためらわれる生成写真です。
 
 これらの写真がredditで投稿・公開されています。
+
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/image918.png)
 
 ## 削除要請はだれがやるのか？
 顔認証・顔類似検索システムを持っているので、私が削除要請を出すことは可能です。
