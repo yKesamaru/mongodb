@@ -1,12 +1,10 @@
 # 生成AIと肖像権
 
-![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets
-https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch_5.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/eye_catch_5.png)
 
 ## はじめに
 まずこちらの画像をご覧ください。公開されている生成AI画像です。
-![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets
-https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/woman4.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/woman4.png)
 
 この画像は`find_similarity_from_mongodb.py`をもとに、名前を割り出しました。
 
@@ -33,8 +31,7 @@ Similar file name: 鈴木京香_TvdV.jpg.png.png_0.png_0_align_resize.png
 高い確率で、「鈴木京香」さんに類似していることが分かります。
 
 次にこちらの画像をご覧ください。
-![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets
-https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/2023-10-02-22-28-25.png)
+![](https://raw.githubusercontent.com/yKesamaru/mongodb/master/assets/2023-10-02-22-28-25.png)
 > [鈴木京香、三谷大河に“皆勤賞” 『鎌倉殿の13人』丹後局役で出演決定](https://www.oricon.co.jp/news/2191840/full/)
 
 背景などをみても明らかに、この写真をモデルの学習に使ったことは明白です。
