@@ -67,7 +67,7 @@ def load_npz_from_directory(directory_path, collection):
                 save_npz_to_mongodb(npz_data, collection)
 
 # MongoDBに接続
-client = MongoClient('localhost', 27019)
+client = MongoClient('172.18.0.2', 27017)
 
 # データベースを選択（データベースが存在しなければ、後から自動生成される）
 db = client['face_recognition_db']

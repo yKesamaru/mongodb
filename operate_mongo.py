@@ -2,18 +2,18 @@ from pymongo import MongoClient
 
 # MongoDBに接続
 # client = MongoClient('172.17.0.0', 27019)  
-client = MongoClient('mongodb://172.17.0.2:27017/')
+client = MongoClient('mongodb://172.18.0.2:27017/')
 print(client.list_database_names())
-# # データベースとコレクションを選択
-# db = client['face_recognition_db']
-# collection = db['known_faces']
+# データベースとコレクションを選択
+db = client['face_recognition_db']
+collection = db['known_faces']
 
 # コレクションを消去
 # collection.drop()
 
-# # コレクション内のドキュメント数をカウント
-# count = collection.count_documents({})
-# print(f"Number of documents in 'known_faces' collection: {count}")
+# コレクション内のドキュメント数をカウント
+count = collection.count_documents({})
+print(f"Number of documents in 'known_faces' collection: {count}")
 
 # # コレクションから2件のドキュメントを取得して表示
 # for doc in collection.find().limit(2):

@@ -16,8 +16,10 @@ api = Dlib_api()
 start_time = time.time()
 
 # 顔写真をロード
-face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman2.png")
-# face_image = api.load_image_file("/home/terms/ドキュメント/find_similar_faces/assets/woman.png")
+face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman4.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman3.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman2.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman.png")
 face_location = api.face_locations(face_image, mode="cnn")
 face_encoding = api.face_encodings(
     deep_learning_model=1,
@@ -27,7 +29,7 @@ face_encoding = api.face_encodings(
 face_encoding = np.array(face_encoding[0][0]).reshape(1, 512)
 
 # MongoDBに接続
-client = MongoClient('localhost', 27019)
+client = MongoClient('172.18.0.2', 27017)
 db = client['face_recognition_db']
 collection = db['known_faces']
 
