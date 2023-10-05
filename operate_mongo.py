@@ -1,14 +1,15 @@
 from pymongo import MongoClient
 
 # MongoDBに接続
-# client = MongoClient('172.17.0.0', 27019)  
+# client = MongoClient('mongodb://127.0.0.1:27017/')  # または 'mongodb://localhost:27017/'
 client = MongoClient('mongodb://172.18.0.2:27017/')
+# client = MongoClient('mongodb://172.17.0.3:27017/')
 print(client.list_database_names())
 # データベースとコレクションを選択
 db = client['face_recognition_db']
 collection = db['known_faces']
 
-# コレクションを消去
+# # コレクションを消去
 # collection.drop()
 
 # コレクション内のドキュメント数をカウント

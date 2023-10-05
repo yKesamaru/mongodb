@@ -67,7 +67,7 @@ def load_npz_from_directory(directory_path, collection):
                 save_npz_to_mongodb(npz_data, collection)
 
 # MongoDBに接続
-client = MongoClient('172.18.0.2', 27017)
+client = MongoClient('mongodb://172.18.0.2:27017/')
 
 # データベースを選択（データベースが存在しなければ、後から自動生成される）
 db = client['face_recognition_db']
@@ -75,8 +75,13 @@ db = client['face_recognition_db']
 # コレクションを選択
 collection = db['known_faces']
 
-# 起点となるディレクトリのパス
-directory_path = "/media/terms/2TB_Movie/face_data_backup/data"
+# 起点となるディレクトリのパスのリスト
+directory_paths = [
+    "/media/terms/2TB_Movie/face_data_backup/data",
+    "/media/terms/2TB_Movie/face_data_backup/more_10_face_images",
+    "/media/terms/2TB_Movie/face_data_backup/less_20_face_images"
+]
 
 # npKnown.npzファイルを読み込み、MongoDBに保存
-load_npz_from_directory(directory_path, collection)
+for directory_path in directory_paths:  # 追加; 各ディレクトリパスに対して処理を実行
+    load_npz_from_directory(directory_path, collection)

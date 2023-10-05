@@ -16,7 +16,10 @@ api = Dlib_api()
 start_time = time.time()
 
 # 顔写真をロード
-face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman4.png")
+face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman7.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman6.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman5.png")
+# face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman4.png")
 # face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman3.png")
 # face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman2.png")
 # face_image = api.load_image_file("/home/terms/bin/mongodb/assets/woman.png")
